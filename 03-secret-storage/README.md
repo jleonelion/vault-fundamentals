@@ -100,7 +100,6 @@ $ openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout selfsigned.key -out 
 ...
 $ vault kv put secret/second @payload.json
 ```
-**Delete** using Web UI
 
 # Additional Resources
 - [CLI Reference](https://www.vaultproject.io/docs/commands/index.html)
