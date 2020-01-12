@@ -76,7 +76,7 @@ $ curl -i \
       --request DELETE \
       ${VAULT_ADDR}/v1/secret/data/first
 ```
-## Working with JSON
+# Key/Value CRUD Ops with JSON
 
 **Create**  new secret using key values in JSON file
 ```shell script
@@ -87,26 +87,22 @@ $ vault kv put secret/second @data.json
 ```shell script
 $ vault kv get secret/second
 $ vault kv get -format=json secret/second
-$ curl -i \
+$ curl \
     --header "X-Vault-Token: ${VAULT_TOKEN}" \
-    ${VAULT_ADDR}/v1/secret/second
+    ${VAULT_ADDR}/v1/secret/data/second
 ```
  
-**Update** using HTTP API
+**Update** secret to include self signed cert
 ```shell script
 # create self signed certificate
 $ openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout selfsigned.key -out cert.pem
 # update payload.json file with contents of pem file
 ...
-# use HTTP API to upload changes
-$ curl -i \
-    --header "X-Vault-Token: ${VAULT_TOKEN}" \
-    --request POST \
-    --data @payload.json \
-    ${VAULT_ADDR}/v1/secret/second
+$ vault kv put secret/second @payload.json
 ```
 **Delete** using Web UI
 
 # Additional Resources
 - [CLI Reference](https://www.vaultproject.io/docs/commands/index.html)
 - [HTTP API](https://www.vaultproject.io/api/overview.html)
+- [Linux File Hierarchy Standard](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
