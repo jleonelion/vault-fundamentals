@@ -5,7 +5,6 @@ $ vault secrets
 $ vault policy
 $ vault auth
 $ vault audit
-$ vault token
 ```
 
 # Sealing and Unsealing
@@ -48,7 +47,7 @@ reconstruct the master key, Vault will remain permanently sealed!
 It is possible to generate new unseal keys, provided you have a quorum of
 existing unseal keys shares. See "vault operator rekey" for more information.
 
-$ vault operatory unseal
+$ vault operator unseal
 Unseal Key (will be hidden): 
 Key                Value
 ---                -----
@@ -98,44 +97,43 @@ View [seal Stanza](https://www.vaultproject.io/docs/configuration/seal/index.htm
 [Vault Configuration](https://www.vaultproject.io/docs/configuration/index.html) docs
 
 # Default Plugins
+
 ```shell script
 $ vault plugin
 ```
 * [Secret Engines](https://www.vaultproject.io/docs/secrets/index.html)
-Enable the engine (example using AWS engine)
+Enable the engine
 ```shell script
-$ vault secrets enable -path=aws aws
-$ vault write aws/config/root \
-    access_key=<access_key> \
-    secret_key=<secret_key>
-$ vault write aws/roles/my-role \
-    credential_type=iam_user \
-    policy_document=@aws-policy.json
-$ vault read aws/creds/my-role
-$ vault lease revoke aws/creds/my-role/<id>
+$ vault secrets enable kv
+$ vault secrets list
+$ vault path-help kv
+$ vault secrets enable -path=secret kv
+$ vault secrets enable -path=secret/007 kv
+$ vault secrets enable -path=007/skyfall kv
+$ vault secrets enable -path=007/spectre -description="secrets for mission SPECTRE" kv
 ```
 Move the path that the secret is mounted too
 ```shell script
-$ vault secrets move aws aws-new
+$ vault secrets move 007/skyfall 007/goldeneye
 ```
 Disable the engine (all secrets are revoke if the engine support revocation)
 ```shell script
-$ vault secrets disable aws-new 
+$ vault secrets disable 007/goldeneye
 ```
 * [Auth Methods](https://www.vaultproject.io/docs/auth/index.html)
 ```shell script
 $ vault auth enable userpass
-$ vault write auth/userpass/users/cybrary \
-    password=student \
+$ vault write auth/userpass/users/jbond007 \
+    password=shaken \
     policies=default
 $ vault login -method=userpass \
-    username=cybrary \
-    password=student
+    username=jbond007 \
+    password=shaken
 ```
 * [Audit Backends](https://www.vaultproject.io/docs/audit/index.html)
 ```shell script
 $ vault audit enable file file_path=vault_audit.log
-$ vault kv put secret/first message="hello world" source="cli"
+$ vault kv put 007/spectre location="Mexico City"" 
 $ cat vault_audit.log
 ```
 
