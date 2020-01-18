@@ -83,6 +83,3 @@ $ vault token capabilities secret/data/goldeye
 $ vault kv put secret/dr-no newkey=newvalue
 $ vault write auth/userpass/users/james.bond password="stirred"
 ```
-
-# Tokens
-
