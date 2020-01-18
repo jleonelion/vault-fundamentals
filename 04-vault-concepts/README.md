@@ -133,7 +133,7 @@ $ vault login -method=userpass \
 * [Audit Backends](https://www.vaultproject.io/docs/audit/index.html)
 ```shell script
 $ vault audit enable file file_path=vault_audit.log
-$ vault kv put 007/spectre location="Mexico City"" 
+$ vault kv put 007/spectre/location city="Mexico City"" 
 $ cat vault_audit.log
 ```
 
