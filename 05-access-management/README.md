@@ -9,7 +9,7 @@ $ vault policy read default
 ## Independent Lab Activity
 Using the CLI:
 1. Create a `intel-upload` policy that provides `create` and `update` access to any secret named "agentintel" in the 2nd segment
-1. Create secrets at the following paths (use whatever key values you want): `secrete/data/dr-no`, `secret/data/dr-no/agentintel`, `secret/data/goldeney/agentintel`, `secret/data/agentintel`
+1. Create secrets at the following paths (use whatever key values you want): `secret/data/dr-no`, `secret/data/dr-no/agentintel`, `secret/data/goldeneye/agentintel`, `secret/data/agentintel`
 1. Enable the `userpass` auth method and create `james.bond` user associated with the `intel-upload` policy
 1. Authenticate with Vault as the `james.bond` user and execute the below commands to test for correctness
 ```shell script
@@ -73,13 +73,13 @@ $ vault kv put secret/goldeneye key=value
 ```
 
 ## Activity
-1. Create "James Bond" identity nd aliases using Web UI
+1. Create "James Bond" identity and aliases using Web UI
 1. Create internal group for "Secret Agents" (associate with `primarymission` and `passreset` policies) using Web UI with James Bond entity as a member
 1. Authenticate as `james.bond` and examine capabilities
 ```shell script
 $ vault token capabilities secret/data/dr-no
 $ vault token capabilities secret/data/dr-no/agentintel
-$ vault token capabilities secret/data/goldeye
+$ vault token capabilities secret/data/goldeneye
 $ vault kv put secret/dr-no newkey=newvalue
 $ vault write auth/userpass/users/james.bond password="stirred"
 ```
