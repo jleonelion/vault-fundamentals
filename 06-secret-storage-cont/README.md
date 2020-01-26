@@ -4,11 +4,15 @@ Make sure you are using version 2 of KV Secret Engine
 $ vault secrets list -detailed
 ```
 
-Use the Web UI to create a new kv secret. then create new version of that secret
+Use the Web UI to create a new kv secret `db/prod`. then create new version of that secret
 
 Retrieve specific version of the secret using CLI
 ```shell script
 $ vault kv get -format=json -version=1 secret/db/prod | jq
+```
+Use "cas" as a precaution for setting new version
+```shell script
+vault kv put -cas=4 secret/db/prod connection="dbserver.mysite.com"
 ```
 
 Use the Web UI to create several new versions of the secret
@@ -31,10 +35,9 @@ $ vault kv put secret/test message="data3"
 Create single use token, then create cubbyhole secret
 ```shell script
 $ vault token create -policy=default -use-limit=2 -ttl=2m -display-name="Limited use token" 
-$ export VAULT_TOKEN=<token>
-$ vault write cubbyhole/daily message="This will self destruct"
-$ vault read cubbyhole/daily
-$ vault read cubbyhole/daily
+$ VAULT_TOKEN=<token> vault write cubbyhole/daily message="This will self destruct"
+$ VAULT_TOKEN=<token> vault read cubbyhole/daily
+$ VAULT_TOKEN=<token> vault read cubbyhole/daily
 ```
 
 # Cubbyhole Response Wrapping
